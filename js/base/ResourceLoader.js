@@ -12,4 +12,22 @@ export class ResourceLoader{
       this.map.set(key,image);
     }
   }
+  /**
+   * 加载图片资源完成回调callback
+   */
+  onLoaded(callback){
+    let loadedCount = 0 ; 
+    for(let value of this.map.values()){
+      value.onload = () =>{
+        loadedCount++;
+        if(loadedCount >= this.map.size){
+          callback(this.map);
+        }
+      }
+    }
+  }
+
+  static create(){
+    return new ResourceLoader();
+  }
 }
