@@ -3,13 +3,16 @@ import { ResourceLoader } from '../js/base/ResourceLoader'
 import { Director } from './Director'
 import {BackGround} from './runtime/BackGround'
 import {DataStore} from "./base/DataStore"
+import {Land} from "./runtime/Land.js"
 
 export class Main{
   constructor(){
     this.ctx = canvas.getContext('2d')
     const loader = ResourceLoader.create();
+    this.director = Director.getInstance();
     this.dataStore = DataStore.getInstance();
     loader.onLoaded((map) => this.onResourceFirstLoaded(map));
+
 
     //Director.getInstance();
 
@@ -22,9 +25,11 @@ export class Main{
   }
 
   init(){
-    this.dataStore.put('background',
-    BackGround);
-
-    Director.getInstance().run();
+    this.dataStore
+    .put('pencils',[])
+    .put('background',BackGround)
+    .put("land",Land);
+    this.director.createPencil();
+    this.director.run();
   }
 }
